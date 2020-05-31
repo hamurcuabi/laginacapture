@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.hardware.display.DisplayManager
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.view.GestureDetector
 import android.view.View
@@ -35,6 +36,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
         const val KEY_GRID = "sPrefGridVideo"
     }
 
+    public var durationRecording = 15000;
     private lateinit var displayManager: DisplayManager
     private lateinit var prefs: SharedPrefsManager
     private lateinit var preview: Preview
@@ -108,6 +110,15 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
         view.setOnTouchListener { _, motionEvent ->
             if (gestureDetectorCompat.onTouchEvent(motionEvent)) return@setOnTouchListener false
             return@setOnTouchListener true
+        }
+
+
+        binding.chronometer!!.setOnChronometerTickListener { chronometer ->
+
+            if ((SystemClock.elapsedRealtime() - chronometer.getBase()) >= durationRecording) {
+                recordVideo(videoCapture)
+            }
+
         }
     }
 
@@ -203,6 +214,8 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
         // Create the output file
         val videoFile = File(outputDirectory, "${System.currentTimeMillis()}.mp4")
         if (!isRecording) {
+            binding.chronometer!!.base = SystemClock.elapsedRealtime()
+            binding.chronometer!!.start()
             animateRecord.start()
             // Capture the video, first parameter is the file where the video should be stored, the second parameter is the callback after racording a video
             videoCapture.startRecording(
@@ -234,6 +247,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
                         }
                     })
         } else {
+            binding.chronometer!!.stop()
             animateRecord.cancel()
             videoCapture.stopRecording()
         }
@@ -301,7 +315,12 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
         }
     }
 
-    override fun onBackPressed() = requireActivity().finish()
+    override fun onBackPressed() {
+        val returnIntent = Intent()
+        requireActivity().setResult(Activity.RESULT_CANCELED, returnIntent)
+        requireActivity().finish()
+
+    }
 
     override fun onStop() {
         super.onStop()
