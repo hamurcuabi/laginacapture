@@ -1,0 +1,3 @@
+rootProject.name='CameraxCaptureVideo'
+include ':app'
+include ':cameraxlib'
