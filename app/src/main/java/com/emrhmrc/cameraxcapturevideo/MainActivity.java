@@ -1,8 +1,11 @@
 package com.emrhmrc.cameraxcapturevideo;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.emrhmrc.cameraxlib.CameraXActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,5 +13,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        startActivityForResult(new Intent(this, CameraXActivity.class),1);
+
+
     }
 }
