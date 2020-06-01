@@ -101,7 +101,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
         })
 
         // This swipe gesture adds a fun gesture to switch between video and photo
-        val swipeGestures = SwipeGestureDetector().apply {
+    /*    val swipeGestures = SwipeGestureDetector().apply {
             setSwipeCallback(left = {
                 Navigation.findNavController(view).navigate(R.id.action_video_to_camera)
             })
@@ -110,7 +110,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
         view.setOnTouchListener { _, motionEvent ->
             if (gestureDetectorCompat.onTouchEvent(motionEvent)) return@setOnTouchListener false
             return@setOnTouchListener true
-        }
+        }*/
 
 
         binding.chronometer!!.setOnChronometerTickListener { chronometer ->
@@ -206,8 +206,8 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
      * Navigate to PreviewFragment
      * */
     fun openPreview() {
-        if (!outputDirectory.listFiles().isNullOrEmpty())
-            view?.let { Navigation.findNavController(it).navigate(R.id.action_video_to_preview) }
+      /*  if (!outputDirectory.listFiles().isNullOrEmpty())
+            view?.let { Navigation.findNavController(it).navigate(R.id.action_video_to_preview) }*/
     }
 
     private fun recordVideo(videoCapture: VideoCapture) {
