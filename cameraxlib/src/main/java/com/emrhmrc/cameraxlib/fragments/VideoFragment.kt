@@ -39,6 +39,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
     private lateinit var prefs: SharedPrefsManager
     private lateinit var preview: Preview
     private lateinit var videoCapture: VideoCapture
+    val returnIntent = Intent()
 
     private var displayId = -1
     private var lensFacing = CameraX.LensFacing.BACK
@@ -97,7 +98,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
             override fun onViewAttachedToWindow(v: View) =
                     displayManager.unregisterDisplayListener(displayListener)
         })
-
+        requireActivity().setResult(Activity.RESULT_OK, returnIntent)
         // This swipe gesture adds a fun gesture to switch between video and photo
         /*    val swipeGestures = SwipeGestureDetector().apply {
                 setSwipeCallback(left = {
@@ -225,9 +226,9 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
                             setGalleryThumbnail(file)
                             val msg = "Video saved in ${file.absolutePath}"
                             Log.d("CameraXDemo", msg)
-                            val returnIntent = Intent()
+
                             returnIntent.putExtra(CameraxEnum.FilePath.name, file.absolutePath)
-                            requireActivity().setResult(Activity.RESULT_OK, returnIntent)
+
                             requireActivity().finish()
                         }
 
@@ -314,6 +315,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
     }
 
     override fun onBackPressed() {
+        requireActivity().setResult(Activity.RESULT_CANCELED, returnIntent)
         videoCapture.stopRecording()
     }
 
@@ -323,6 +325,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
 
     override fun onPause() {
         super.onPause()
+        requireActivity().setResult(Activity.RESULT_CANCELED, returnIntent)
         videoCapture.stopRecording()
 
     }
