@@ -10,13 +10,11 @@ import android.hardware.display.DisplayManager
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
-import android.view.GestureDetector
 import android.view.View
 import android.widget.Toast
 import androidx.camera.core.*
 import androidx.core.animation.doOnCancel
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
 import ccom.emrhmrc.cameraxlib.fragments.BaseFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -101,16 +99,16 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
         })
 
         // This swipe gesture adds a fun gesture to switch between video and photo
-    /*    val swipeGestures = SwipeGestureDetector().apply {
-            setSwipeCallback(left = {
-                Navigation.findNavController(view).navigate(R.id.action_video_to_camera)
-            })
-        }
-        val gestureDetectorCompat = GestureDetector(requireContext(), swipeGestures)
-        view.setOnTouchListener { _, motionEvent ->
-            if (gestureDetectorCompat.onTouchEvent(motionEvent)) return@setOnTouchListener false
-            return@setOnTouchListener true
-        }*/
+        /*    val swipeGestures = SwipeGestureDetector().apply {
+                setSwipeCallback(left = {
+                    Navigation.findNavController(view).navigate(R.id.action_video_to_camera)
+                })
+            }
+            val gestureDetectorCompat = GestureDetector(requireContext(), swipeGestures)
+            view.setOnTouchListener { _, motionEvent ->
+                if (gestureDetectorCompat.onTouchEvent(motionEvent)) return@setOnTouchListener false
+                return@setOnTouchListener true
+            }*/
 
 
         binding.chronometer!!.setOnChronometerTickListener { chronometer ->
@@ -206,8 +204,8 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
      * Navigate to PreviewFragment
      * */
     fun openPreview() {
-      /*  if (!outputDirectory.listFiles().isNullOrEmpty())
-            view?.let { Navigation.findNavController(it).navigate(R.id.action_video_to_preview) }*/
+        /*  if (!outputDirectory.listFiles().isNullOrEmpty())
+              view?.let { Navigation.findNavController(it).navigate(R.id.action_video_to_preview) }*/
     }
 
     private fun recordVideo(videoCapture: VideoCapture) {
@@ -316,13 +314,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
     }
 
     override fun onBackPressed() {
-        binding.chronometer!!.stop()
-        animateRecord.cancel()
         videoCapture.stopRecording()
-        val returnIntent = Intent()
-        requireActivity().setResult(Activity.RESULT_CANCELED, returnIntent)
-        requireActivity().finish()
-
     }
 
     override fun onResume() {
