@@ -316,14 +316,26 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
     }
 
     override fun onBackPressed() {
+        binding.chronometer!!.stop()
+        animateRecord.cancel()
+        videoCapture.stopRecording()
         val returnIntent = Intent()
         requireActivity().setResult(Activity.RESULT_CANCELED, returnIntent)
         requireActivity().finish()
 
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        videoCapture.stopRecording()
+
+    }
+
     override fun onStop() {
         super.onStop()
-        preview.enableTorch(false)
     }
 }
