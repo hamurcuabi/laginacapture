@@ -154,10 +154,12 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
             lensFacing == CameraX.LensFacing.BACK, 180f,
             R.drawable.ic_outline_camera_rear, R.drawable.ic_outline_camera_front
     ) {
-        lensFacing = if (it) CameraX.LensFacing.BACK else CameraX.LensFacing.FRONT
+        if(!isRecording){
+            lensFacing = if (it) CameraX.LensFacing.BACK else CameraX.LensFacing.FRONT
+            CameraX.getCameraWithLensFacing(lensFacing)
+            recreateCamera()
+        }
 
-        CameraX.getCameraWithLensFacing(lensFacing)
-        recreateCamera()
     }
 
     /**
