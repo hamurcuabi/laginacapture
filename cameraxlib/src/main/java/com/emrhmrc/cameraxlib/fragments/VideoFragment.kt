@@ -243,6 +243,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
                             Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                             Log.e("CameraXApp", msg)
                             cause?.printStackTrace()
+                            requireActivity().finish()
                         }
                     })
         } else {
@@ -315,13 +316,17 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
     }
 
     override fun onBackPressed() {
-        requireActivity().setResult(Activity.RESULT_CANCELED, returnIntent)
-        videoCapture.stopRecording()
+        if (isRecording){
+            requireActivity().setResult(Activity.RESULT_CANCELED, returnIntent)
+            videoCapture.stopRecording()
+        }
+        else{
+            requireActivity().setResult(Activity.RESULT_CANCELED, returnIntent)
+            requireActivity().finish()
+        }
+
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
 
     override fun onPause() {
         super.onPause()
@@ -330,7 +335,4 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
 
     }
 
-    override fun onStop() {
-        super.onStop()
-    }
 }
