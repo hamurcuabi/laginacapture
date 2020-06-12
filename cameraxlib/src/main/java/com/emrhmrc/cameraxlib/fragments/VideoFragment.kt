@@ -16,8 +16,6 @@ import androidx.camera.core.*
 import androidx.core.animation.doOnCancel
 import androidx.lifecycle.lifecycleScope
 import ccom.emrhmrc.cameraxlib.fragments.BaseFragment
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.emrhmrc.cameraxlib.R
 import com.emrhmrc.cameraxlib.databinding.FragmentVideoBinding
 import com.emrhmrc.cameraxlib.enums.CameraxEnum
@@ -125,9 +123,6 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
      * Create some initial states
      * */
     private fun initViews() {
-        binding.buttonGrid.setImageResource(if (hasGrid) R.drawable.ic_grid_on else R.drawable.ic_grid_off)
-        binding.groupGridLines.visibility = if (hasGrid) View.VISIBLE else View.GONE
-
         adjustInsets()
     }
 
@@ -141,9 +136,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
                 view.bottomMargin = windowInsets.systemWindowInsetBottom
             else view.endMargin = windowInsets.systemWindowInsetRight
         }
-        binding.buttonFlash.onWindowInsets { view, windowInsets ->
-            view.topMargin = windowInsets.systemWindowInsetTop
-        }
+
     }
 
     /**
@@ -154,7 +147,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
             lensFacing == CameraX.LensFacing.BACK, 180f,
             R.drawable.ic_outline_camera_rear, R.drawable.ic_outline_camera_front
     ) {
-        if(!isRecording){
+        if (!isRecording) {
             lensFacing = if (it) CameraX.LensFacing.BACK else CameraX.LensFacing.FRONT
             CameraX.getCameraWithLensFacing(lensFacing)
             recreateCamera()
@@ -225,7 +218,7 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
                     object : VideoCapture.OnVideoSavedListener {
                         override fun onVideoSaved(file: File) {
                             // Create small preview
-                            setGalleryThumbnail(file)
+                            //setGalleryThumbnail(file)
                             val msg = "Video saved in ${file.absolutePath}"
                             Log.d("CameraXDemo", msg)
 
@@ -258,20 +251,20 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
 
     /**
      * Turns on or off the grid on the screen
-     * */
+     *
     fun toggleGrid() =
-            binding.buttonGrid.toggleButton(
-                    hasGrid,
-                    180f,
-                    R.drawable.ic_grid_off,
-                    R.drawable.ic_grid_on
-            ) { flag ->
-                hasGrid = flag
-                prefs.putBoolean(KEY_GRID, flag)
-                binding.groupGridLines.visibility = if (flag) View.VISIBLE else View.GONE
-            }
+    binding.buttonGrid.toggleButton(
+    hasGrid,
+    180f,
+    R.drawable.ic_grid_off,
+    R.drawable.ic_grid_on
+    ) { flag ->
+    hasGrid = flag
+    prefs.putBoolean(KEY_GRID, flag)
+    binding.groupGridLines.visibility = if (flag) View.VISIBLE else View.GONE
+    }
 
-    /**
+    /** */
      * Turns on or off the flashlight
      * */
     fun toggleFlash() {
@@ -298,31 +291,21 @@ class VideoFragment : BaseFragment<FragmentVideoBinding>(R.layout.fragment_video
                     // Do on IO Dispatcher
                     // Check if there are any photos or videos in the app directory and preview the last one
                     outputDirectory.listFiles()?.firstOrNull()?.let {
-                        setGalleryThumbnail(it)
+                        // setGalleryThumbnail(it)
                     }
-                            ?: binding.buttonGallery.setImageResource(R.drawable.ic_no_picture) // or the default placeholder
+                    // ?: binding.buttonGallery.setImageResource(R.drawable.ic_no_picture)
+                    // or the default placeholder
                 }
                 preview.enableTorch(isTorchOn)
             }
         }
     }
 
-    private fun setGalleryThumbnail(file: File) = binding.buttonGallery.let {
-        // Do the work on view's thread, this is needed, because the function is called in a Coroutine Scope's IO Dispatcher
-        it.post {
-            Glide.with(requireContext())
-                    .load(file)
-                    .apply(RequestOptions.circleCropTransform())
-                    .into(it)
-        }
-    }
-
     override fun onBackPressed() {
-        if (isRecording){
+        if (isRecording) {
             requireActivity().setResult(Activity.RESULT_CANCELED, returnIntent)
             videoCapture.stopRecording()
-        }
-        else{
+        } else {
             requireActivity().setResult(Activity.RESULT_CANCELED, returnIntent)
             requireActivity().finish()
         }
