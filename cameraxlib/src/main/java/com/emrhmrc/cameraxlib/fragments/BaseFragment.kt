@@ -3,7 +3,6 @@ package ccom.emrhmrc.cameraxlib.fragments
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.emrhmrc.cameraxlib.R
+import com.emrhmrc.cameraxlib.enums.Static
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
@@ -54,8 +54,7 @@ abstract class BaseFragment<B : ViewDataBinding>(private val fragmentLayout: Int
 
         // Init the output folder
         outputDirectory = File(
-                requireContext().getExternalFilesDir(Environment.DIRECTORY_DCIM)?.absolutePath
-                        ?: requireContext().externalMediaDirs.first().absolutePath
+                Static.PATH
         )
 
         // Create a binding instance
