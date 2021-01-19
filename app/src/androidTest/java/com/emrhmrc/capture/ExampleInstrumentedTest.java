@@ -1,4 +1,4 @@
-package com.emrhmrc.cameraxcapturevideo;
+package com.emrhmrc.capture;
 
 import android.content.Context;
 

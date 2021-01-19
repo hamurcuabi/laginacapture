@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/black"
-        android:paddingBottom="48dp"
+        android:paddingBottom="64dp"
         tools:context="com.example.camerax.fragments.PreviewFragment">
 
         <androidx.viewpager2.widget.ViewPager2
@@ -63,7 +63,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-
             android:id="@+id/imageShare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,14 +72,12 @@
             android:padding="@dimen/fab_margin"
             android:src="@drawable/ic_arrow_back"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
             android:id="@+id/imageDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="?selectableItemBackgroundBorderless"
             android:fitsSystemWindows="false"
             android:onClick="@{()->fragment.deleteImage()}"
@@ -95,14 +92,14 @@
             android:id="@+id/imageDone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?selectableItemBackgroundBorderless"
+            android:background="@drawable/bg_done"
             android:fitsSystemWindows="false"
             android:onClick="@{()->fragment.done()}"
             android:padding="@dimen/fab_margin"
             android:src="@drawable/ic_done"
             app:layout_constraintBottom_toBottomOf="@+id/imageShare"
-            app:layout_constraintEnd_toStartOf="@+id/imageDelete"
-            app:layout_constraintStart_toEndOf="@+id/imageShare" />
+            app:layout_constraintEnd_toEndOf="@+id/bgBottom"
+            app:layout_constraintStart_toStartOf="@+id/bgBottom" />
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/groupPreviewActions"
