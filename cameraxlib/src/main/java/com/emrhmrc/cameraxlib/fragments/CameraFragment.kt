@@ -37,6 +37,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(R.layout.fragment_cam
         const val KEY_HDR = "sPrefHDR"
     }
 
+    val bundle = Bundle();
     private lateinit var displayManager: DisplayManager
     private lateinit var prefs: SharedPrefsManager
     private lateinit var preview: Preview
@@ -57,6 +58,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(R.layout.fragment_cam
     private var hasGrid = false
     private var hasHdr = false
     private var selectedTimer = CameraTimer.OFF
+
 
     /**
      * A display listener for orientation changes that do not trigger a configuration
@@ -163,7 +165,10 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(R.layout.fragment_cam
      * */
     fun openPreview() {
         if (!outputDirectory.listFiles().isNullOrEmpty())
-            view?.let { Navigation.findNavController(it).navigate(R.id.action_camera_to_preview) }
+            view?.let {
+
+                Navigation.findNavController(it).navigate(R.id.action_camera_to_preview, bundle)
+            }
     }
 
     /**
@@ -258,14 +263,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(R.layout.fragment_cam
                 // Setting current display ID
                 displayId = vf.display.displayId
                 recreateCamera()
-                lifecycleScope.launch(Dispatchers.IO) {
-                    // Do on IO Dispatcher
-                    // Check if there are any photos or videos in the app directory and preview the last one
-                    outputDirectory.listFiles()?.firstOrNull()?.let {
-                        setGalleryThumbnail(it)
-                    }
-                            ?: binding.buttonGallery.setImageResource(R.drawable.ic_no_picture) // or the default placeholder
-                }
+
             }
         }
     }
@@ -368,6 +366,8 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(R.layout.fragment_cam
                         setGalleryThumbnail(file)
                         val msg = "Photo saved in ${file.absolutePath}"
                         Log.d("CameraXDemo", msg)
+                        bundle.putString("CameraXFilePath", file.absolutePath)
+                        openPreview()
                     }
 
                     override fun onError(

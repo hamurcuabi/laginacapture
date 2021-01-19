@@ -14,8 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startActivityForResult(new Intent(this, CameraXActivity.class),1);
-
+        startActivityForResult(new Intent(this, CameraXActivity.class), 1);
 
     }
 }

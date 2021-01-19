@@ -25,8 +25,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingBottom="48dp"
         android:background="@android:color/black"
-        tools:context=".fragments.CameraFragment">
+        tools:context="com.example.camerax.fragments.CameraFragment">
 
         <TextureView
             android:id="@+id/viewFinder"
@@ -38,7 +39,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
-            android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:alpha="0.4"
@@ -47,7 +47,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/fabTakePicture" />
-
 
         <ImageButton
             android:id="@+id/fabTakePicture"
@@ -70,7 +69,6 @@
             android:onClick="@{()-> fragment.openPreview()}"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_no_picture"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/fabTakePicture"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/fabTakePicture"
@@ -86,7 +84,6 @@
             android:padding="@dimen/half_margin"
             android:scaleType="centerInside"
             android:src="@drawable/ic_outline_camera_front"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/fabTakePicture"
             app:layout_constraintEnd_toStartOf="@id/fabTakePicture"
             app:layout_constraintStart_toStartOf="parent"
@@ -94,6 +91,7 @@
             tools:ignore="ContentDescription" />
 
         <View
+            android:visibility="gone"
             android:id="@+id/viewBg2"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -106,6 +104,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:visibility="gone"
             android:id="@+id/buttonTimer"
             android:layout_width="@dimen/button_size_small"
             android:layout_height="@dimen/button_size_small"
@@ -122,6 +121,7 @@
             tools:ignore="ContentDescription" />
 
         <ImageButton
+            android:visibility="gone"
             android:id="@+id/buttonGrid"
             android:layout_width="@dimen/button_size_small"
             android:layout_height="@dimen/button_size_small"
@@ -138,6 +138,7 @@
             tools:ignore="ContentDescription" />
 
         <ImageButton
+            android:visibility="gone"
             android:id="@+id/buttonFlash"
             android:layout_width="@dimen/button_size_small"
             android:layout_height="@dimen/button_size_small"
@@ -154,6 +155,7 @@
             tools:ignore="ContentDescription" />
 
         <ImageButton
+            android:visibility="gone"
             android:id="@+id/buttonHdr"
             android:layout_width="@dimen/button_size_small"
             android:layout_height="@dimen/button_size_small"
@@ -310,7 +312,7 @@
                 android:background="@android:color/transparent"
                 android:onClick="@{()->fragment.closeFlashAndSelect(flash.AUTO)}"
                 android:src="@drawable/ic_flash_auto"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"/>
 
             <ImageButton
                 android:id="@+id/buttonFlashOn"
@@ -320,7 +322,7 @@
                 android:background="@android:color/transparent"
                 android:onClick="@{()->fragment.closeFlashAndSelect(flash.ON)}"
                 android:src="@drawable/ic_flash_on"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription"/>
 
         </LinearLayout>
 

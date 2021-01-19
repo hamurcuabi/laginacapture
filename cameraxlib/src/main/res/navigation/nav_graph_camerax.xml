@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_host"
-    app:startDestination="@id/videoFragment">
+    app:startDestination="@id/cameraFragment">
 
     <fragment
         android:id="@+id/cameraFragment"
         android:name="com.emrhmrc.cameraxlib.fragments.CameraFragment"
         android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera">
+        tools:layout="@layout/fragment_camera" >
         <action
             android:id="@+id/action_camera_to_preview"
             app:destination="@id/previewFragment"
@@ -38,7 +38,7 @@
         android:id="@+id/videoFragment"
         android:name="com.emrhmrc.cameraxlib.fragments.VideoFragment"
         android:label="fragment_video"
-        tools:layout="@layout/fragment_video">
+        tools:layout="@layout/fragment_video" >
         <action
             android:id="@+id/action_video_to_preview"
             app:destination="@id/previewFragment"

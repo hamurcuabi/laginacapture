@@ -1,5 +1,6 @@
 package com.emrhmrc.cameraxlib.fragments
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -13,12 +14,14 @@ import com.emrhmrc.cameraxlib.utils.*
 class PreviewFragment : BaseFragment<FragmentPreviewBinding>(R.layout.fragment_preview) {
     private lateinit var picturesAdapter: PicturesAdapter
     private var currentPage = 0
+    val returnIntent = Intent()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.fragment = this // setting the variable for XML
         adjustInsets()
-
+        val filePath = arguments?.getString("CameraXFilePath", "")
+        returnIntent.putExtra("CameraXFilePath", filePath)
         // Check for the permissions and show files
         if (allPermissionsGranted()) {
             outputDirectory.listFiles()?.let {
@@ -69,6 +72,11 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>(R.layout.fragment_p
         picturesAdapter.deleteImage(currentPage) {
             if (outputDirectory.listFiles().isNullOrEmpty()) onBackPressed()
         }
+    }
+
+    fun done() {
+        requireActivity().setResult(Activity.RESULT_OK, returnIntent)
+        requireActivity().finish()
     }
 
     override fun onBackPressed() {
