@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.Navigation
 import ccom.emrhmrc.cameraxlib.fragments.BaseFragment
+import com.bumptech.glide.Glide
 import com.emrhmrc.cameraxlib.R
 import com.emrhmrc.cameraxlib.adapter.PicturesAdapter
 import com.emrhmrc.cameraxlib.databinding.FragmentPreviewBinding
@@ -22,28 +23,10 @@ class PreviewFragment : BaseFragment<FragmentPreviewBinding>(R.layout.fragment_p
         adjustInsets()
         val filePath = arguments?.getString("CameraXFilePath", "")
         returnIntent.putExtra("CameraXFilePath", filePath)
-        // Check for the permissions and show files
-        if (allPermissionsGranted()) {
-            outputDirectory.listFiles()?.let {
-                picturesAdapter = PicturesAdapter(it.toMutableList()) { isVideo, uri ->
-                    if (!isVideo) {
-                        binding.groupPreviewActions.visibility =
-                                if (binding.groupPreviewActions.visibility == View.VISIBLE) View.GONE else View.VISIBLE
-                    } else {
-                        val play = Intent(Intent.ACTION_VIEW, uri).apply {
-                            setDataAndType(
-                                    uri,
-                                    "video/mp4"
-                            )
-                        }
-                        startActivity(play)
-                    }
-                }
-                binding.pagerPhotos.apply {
-                    adapter = picturesAdapter
-                    onPageSelected { page -> currentPage = page }
-                }
-            }
+        binding.photo.let {
+            Glide.with(it)
+                    .load(filePath)
+                    .into(it)
         }
     }
 

@@ -18,10 +18,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        File path = new File(getFilesDir() + "/pdf/temp");
 
         Intent newIntent = new Intent(this, CameraXActivity.class);
-        newIntent.putExtra("PATH", path.getAbsolutePath());
+        newIntent.putExtra("PATH", getFilesDir().getAbsolutePath());
         startActivityForResult(newIntent, 1231);
 
     }
