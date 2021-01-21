@@ -363,18 +363,21 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(R.layout.fragment_cam
                 object : ImageCapture.OnImageSavedListener {
                     override fun onImageSaved(file: File) { // the resulting file of taken photo
                         // Create small preview
-                        setGalleryThumbnail(file)
-                        val msg = "Photo saved in ${file.absolutePath}"
-                        Log.d("CameraXDemo", msg)
-                        bundle.putString("CameraXFilePath", file.absolutePath)
-                        openPreview()
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            setGalleryThumbnail(file)
+                            val msg = "Photo saved in ${file.absolutePath}"
+                            Log.d("CameraXDemo", msg)
+                            bundle.putString("CameraXFilePath", file.absolutePath)
+                            openPreview()
+                        }
+
                     }
 
                     override fun onError(
                             imageCaptureError: ImageCapture.ImageCaptureError,
                             message: String,
                             cause: Throwable?
-                    ) {
+                    )  {
                         // This function is called if there is some error during capture process
                         val msg = "Photo capture failed: $message"
                         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()

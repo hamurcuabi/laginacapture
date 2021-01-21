@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.emrhmrc.cameraxlib.CameraXActivity;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
@@ -16,8 +18,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        File path = new File(getFilesDir() + "/pdf/temp");
 
-        startActivityForResult(new Intent(this, CameraXActivity.class), 1);
+        Intent newIntent = new Intent(this, CameraXActivity.class);
+        newIntent.putExtra("PATH", path.getAbsolutePath());
+        startActivityForResult(newIntent, 1231);
 
     }
 
