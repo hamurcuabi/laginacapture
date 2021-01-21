@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
             String test = data.getStringExtra("CameraXFilePath");
-            Log.d(TAG, "onActivityResult: +test");
+            Log.d(TAG, "onActivityResult: +new name added");
         }
     }
 }
