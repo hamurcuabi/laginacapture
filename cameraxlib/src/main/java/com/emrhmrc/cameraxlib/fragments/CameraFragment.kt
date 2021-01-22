@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.hardware.display.DisplayManager
+import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
@@ -355,6 +356,9 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(R.layout.fragment_cam
 
     private fun captureImage(imageCapture: ImageCapture) {
         // Create the output file
+        binding.fabTakePicture.visibility=View.INVISIBLE
+        binding.progress.visibility=View.VISIBLE
+        binding.fabTakePicture.isEnabled=false
         val imageFile = File(outputDirectory, "${System.currentTimeMillis()}.jpg")
         // Capture the image, first parameter is the file where the image should be stored, the second parameter is the callback after taking a photo
         imageCapture.takePicture(
@@ -365,6 +369,8 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(R.layout.fragment_cam
                         val msg = "Photo saved in ${file.absolutePath}"
                         Log.d("CameraXDemo", msg)
                         bundle.putString("CameraXFilePath", file.absolutePath)
+                        binding.progress.visibility=View.INVISIBLE
+                        binding.fabTakePicture.visibility=View.VISIBLE
                         openPreview()
 
                     }
@@ -382,6 +388,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(R.layout.fragment_cam
                     }
                 })
     }
+
 
     private fun setGalleryThumbnail(file: File) = binding.buttonGallery.let {
         // Do the work on view's thread, this is needed, because the function is called in a Coroutine Scope's IO Dispatcher
