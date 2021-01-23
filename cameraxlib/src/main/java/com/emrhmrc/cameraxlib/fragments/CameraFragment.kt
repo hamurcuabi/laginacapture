@@ -23,6 +23,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.emrhmrc.cameraxlib.R
 import com.emrhmrc.cameraxlib.databinding.FragmentCameraBinding
 import com.emrhmrc.cameraxlib.enums.CameraTimer
+import com.emrhmrc.cameraxlib.enums.Static
 import com.emrhmrc.cameraxlib.utils.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -359,7 +360,7 @@ class CameraFragment : BaseFragment<FragmentCameraBinding>(R.layout.fragment_cam
         binding.fabTakePicture.visibility=View.INVISIBLE
         binding.progress.visibility=View.VISIBLE
         binding.fabTakePicture.isEnabled=false
-        val imageFile = File(outputDirectory, "${System.currentTimeMillis()}.jpg")
+        val imageFile = File(outputDirectory, Static.FILE_NAME)
         // Capture the image, first parameter is the file where the image should be stored, the second parameter is the callback after taking a photo
         imageCapture.takePicture(
                 imageFile,

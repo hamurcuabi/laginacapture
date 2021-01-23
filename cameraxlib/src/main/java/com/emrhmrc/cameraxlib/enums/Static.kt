@@ -1,5 +1,5 @@
 package com.emrhmrc.cameraxlib.enums
 
 object Static {
-    var PATH=""
+    var FILE_NAME=""
 }

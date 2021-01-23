@@ -10,6 +10,6 @@ class CameraXActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camerax)
-        Static.PATH = intent.getStringExtra("PATH");
+        Static.FILE_NAME = intent.getStringExtra("FILE_NAME");
     }
 }

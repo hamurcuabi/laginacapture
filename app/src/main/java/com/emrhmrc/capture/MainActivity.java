@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent newIntent = new Intent(this, CameraXActivity.class);
-        newIntent.putExtra("PATH", getFilesDir().getAbsolutePath());
+        newIntent.putExtra("FILE_NAME", getFilesDir().getAbsolutePath());
         startActivityForResult(newIntent, 1231);
 
     }

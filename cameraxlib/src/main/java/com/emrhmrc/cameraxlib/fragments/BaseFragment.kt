@@ -3,6 +3,7 @@ package ccom.emrhmrc.cameraxlib.fragments
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,7 +54,7 @@ abstract class BaseFragment<B : ViewDataBinding>(private val fragmentLayout: Int
 
         // Init the output folder
         outputDirectory = File(
-                Static.PATH
+                requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)!!.absolutePath
         )
 
         // Create a binding instance
